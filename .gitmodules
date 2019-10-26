@@ -1,0 +1,3 @@
+[submodule "degeo"]
+	path = degeo
+	url = https://github.com/degeo/degeo-php.git
