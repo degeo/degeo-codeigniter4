@@ -160,9 +160,9 @@ class BaseController extends Controller
 			'application' => $this->application,
 			'hosts'       => $this->hosts,
 			'document'    => $this->document,
-			'metatags'    => $this->metatags->get_queue(),
-			'messages'    => $this->messages->get_queue(),
-			'breadcrumbs' => $this->breadcrumbs->get_queue(),
+			'metatags'    => $this->metatags,
+			'messages'    => $this->messages,
+			'breadcrumbs' => $this->breadcrumbs,
 			'layout'      => $this->layout,
 		];
 

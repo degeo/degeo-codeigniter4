@@ -7,6 +7,6 @@ isset( $layout ) || $layout     = new stdObject();
 <html>
 	<head>
 		<title><?php echo $document->title(); ?></title>
-		<?php echo view( 'html/metatags', [ 'metatags' => $metatags ] ); ?>
+		<?php echo $metatags->render(); ?>
 	</head>
 	<body class="<?php #echo $layout->body_classes(); ?>">
