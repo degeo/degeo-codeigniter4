@@ -109,10 +109,8 @@ class AclController extends ApplicationController
 	protected function _create($email, $password)
 	{
 		$data = [
-			'user_email',
-			$email,
-			'user_password',
-			$password,
+			'user_email'    => $email,
+			'user_password' => $password,
 		];
 
 		$user_id = $this->users_model->insert( $data );
@@ -129,10 +127,8 @@ class AclController extends ApplicationController
 	protected function _login($email, $password)
 	{
 		$where = [
-			'user_email',
-			$email,
-			'user_password',
-			$password,
+			'user_email'    => $email,
+			'user_password' => $password,
 		];
 
 		$user = $this->users_model->where( $where )->first();
