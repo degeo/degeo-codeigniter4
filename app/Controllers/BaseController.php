@@ -125,11 +125,14 @@ class BaseController extends Controller
 		// DeGeo Metatags Queue Library
 		$this->metatags = new \DeGeo\Libraries\Metatags_queue();
 
+		// Set Default Meta Tag Charset
+		$this->metatags->add( '<meta charset="UTF-8">', 1 );
+
 		// Set Default Meta Tag Description
-		$this->metatags->add( '<meta name="description" content="' . $this->application->description . '"/>', 1 );
+		$this->metatags->add( '<meta name="description" content="' . $this->application->description . '"/>', 2 );
 
 		// Set Default Meta Tag Keywords
-		$this->metatags->add( '<meta name="keywords" content="' . $this->application->keywords . '"/>', 2 );
+		$this->metatags->add( '<meta name="keywords" content="' . $this->application->keywords . '"/>', 3 );
 
 		// DeGeo Messages Queue Library
 		$this->messages = new \DeGeo\Libraries\Messages_queue();
@@ -153,13 +156,15 @@ class BaseController extends Controller
 	 */
 	protected function build_data($additional_data = [])
 	{
+		// Array keys are available as variables in all views.
 		$data = [
 			'application' => $this->application,
 			'hosts'       => $this->hosts,
 			'document'    => $this->document,
-			'metatags'    => $this->metatags,
-			'messages'    => $this->messages,
+			'metatags'    => $this->metatags->get_queue(),
+			'messages'    => $this->messages->get_queue(),
 			'breadcrumbs' => $this->breadcrumbs->get_queue(),
+			'layout'      => $this->layout,
 		];
 
 		if (! is_array( $additional_data ) && ! empty( $additional_data ))
