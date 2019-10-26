@@ -151,7 +151,7 @@ class DegeoController extends BaseController
 	 * @param  array $additional_data
 	 * @return array
 	 */
-	protected function build_data($additional_data = [])
+	protected function build_render_data($additional_data = [])
 	{
 		// Array keys are available as variables in all views.
 		$data = [
@@ -259,10 +259,14 @@ class DegeoController extends BaseController
 	protected function render()
 	{
 		// Add Data for Rendering
-		$data = $this->build_data();
+		$render_data = $this->build_render_data();
+
+		// Add Data directly to Renderer
+		// This allows the layouts to override the render data array
+		$this->renderer->setData( $render_data );
 
 		// Render Layout
-		return $this->layout->render( $data );
+		return $this->layout->render();
 	} // function
 
 	/**
