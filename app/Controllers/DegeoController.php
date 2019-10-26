@@ -225,8 +225,8 @@ class DegeoController extends BaseController
 		$layout = new \DeGeo\Libraries\Codeigniter4_layout();
 
 		// Add HTML Layouts
-		$layout->add( 'html/html5/header', 1 );
-		$layout->add( 'html/html5/footer', 999999 );
+		$layout->add( 'html/bootstrap/header', 1 );
+		$layout->add( 'html/bootstrap/footer', 999999 );
 
 		return $layout;
 	} // function
