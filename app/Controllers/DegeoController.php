@@ -165,6 +165,25 @@ class DegeoController extends BaseController
 			'layout'      => $this->layout,
 		];
 
+		// Set Default Title Variable
+		if(! array_key_exists( 'title', $additional_data )):
+			if(! empty( $this->application->name )):
+				$data['title'] = $this->application->name;
+			else:
+				$data['title'] = '';
+			endif;
+		endif;
+
+		// Set Default Sub Title Variable
+		if(! array_key_exists( 'subtitle', $additional_data )):
+			if(! empty( $this->document->title() )):
+				$data['subtitle'] = $this->document->title();
+			else:
+				$data['subtitle'] = '';
+			endif;
+		endif;
+
+		// Merge in Additional Data if provided
 		if (! is_array( $additional_data ) && ! empty( $additional_data ))
 		{
 			$data = array_merge( $data, $additional_data );
