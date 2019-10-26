@@ -127,48 +127,20 @@ class BaseController extends Controller
 		// DeGeo Hosts Library
 		$this->hosts = new \DeGeo\Libraries\Hosts();
 
-		// DeGeo Document Library
-		$this->document = new \DeGeo\Objects\Document();
+		// Create Document Object for Page Information
+		$this->document = new \DeGeo\Objects\Document( $this->application->name, $this->application->description );
 
-		// Set Default Document Title to Application Name
-		$this->document->title( $this->application->name );
-
-		// Set Default Document Description to Application Descrpition
-		$this->document->description( $this->application->description );
-
-		// Set Default Document Attributes
-		// $this->document->attributes( (array) );
-
-		// DeGeo Metatags Queue Library
-		$this->metatags = new \DeGeo\Libraries\Metatags_queue();
-
-		// Set Default Meta Tag Charset
-		$this->metatags->add( '<meta charset="UTF-8">', 1 );
-
-		// Set Default Meta Tag Viewport
-		$this->metatags->add( '<meta name="viewport" content="width=device-width, initial-scale=1">', 2 );
-
-		// Set Default Meta Tag Description
-		$this->metatags->add( '<meta name="description" content="' . $this->application->description . '"/>', 3 );
-
-		// Set Default Meta Tag Keywords
-		$this->metatags->add( '<meta name="keywords" content="' . $this->application->keywords . '"/>', 4 );
+		// Create Metatags Queue and Set Defaults
+		$this->metatags = $this->create_default_metatags();
 
 		// DeGeo Messages Queue Library
 		$this->messages = new \DeGeo\Libraries\Messages_queue();
 
-		// DeGeo Breadcrumbs Queue Library
-		$this->breadcrumbs = new \DeGeo\Libraries\Breadcrumbs_queue();
+		// Create Breadcrumbs Queue and Set Defaults
+		$this->breadcrumbs = $this->create_default_breadcrumbs();
 
-		// Add First Breadcrumb
-		$this->breadcrumbs->add( '', $this->application->name, 1 );
-
-		// DeGeo CodeIgniter 4 Layout Library
-		$this->layout = new \DeGeo\Libraries\Codeigniter4_layout();
-
-		// Add HTML Layouts
-		$this->layout->add( 'html/html5/header', 1 );
-		$this->layout->add( 'html/html5/footer', 999999 );
+		// Create Layout Queue and Set Defaults
+		$this->layout = $this->create_default_layout();
 
 		// Load CodeIgniter 4 Renderer Service
 		$this->renderer = Services::renderer();
@@ -200,6 +172,49 @@ class BaseController extends Controller
 		}
 
 		return $data;
+	} // function
+
+	protected function create_default_metatags()
+	{
+		// DeGeo Metatags Queue Library
+		$metatags = new \DeGeo\Libraries\Metatags_queue();
+
+		// Set Default Meta Tag Charset
+		$metatags->add( '<meta charset="UTF-8">', 1 );
+
+		// Set Default Meta Tag Viewport
+		$metatags->add( '<meta name="viewport" content="width=device-width, initial-scale=1">', 2 );
+
+		// Set Default Meta Tag Description
+		$metatags->add( '<meta name="description" content="' . $this->application->description . '"/>', 3 );
+
+		// Set Default Meta Tag Keywords
+		$metatags->add( '<meta name="keywords" content="' . $this->application->keywords . '"/>', 4 );
+
+		return $metatags;
+	} // function
+
+	protected function create_default_breadcrumbs()
+	{
+		// DeGeo Breadcrumbs Queue Library
+		$breadcrumbs = new \DeGeo\Libraries\Breadcrumbs_queue();
+
+		// Add First Breadcrumb
+		$breadcrumbs->add( '', $this->application->name, 1 );
+
+		return $breadcrumbs;
+	} // function
+
+	protected function create_default_layout()
+	{
+		// DeGeo CodeIgniter 4 Layout Library
+		$layout = new \DeGeo\Libraries\Codeigniter4_layout();
+
+		// Add HTML Layouts
+		$layout->add( 'html/html5/header', 1 );
+		$layout->add( 'html/html5/footer', 999999 );
+
+		return $layout;
 	} // function
 
 	/**
