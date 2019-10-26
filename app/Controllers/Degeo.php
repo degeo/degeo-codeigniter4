@@ -13,12 +13,15 @@ class Degeo extends BaseController
 
 		// Data Processing (Model calls)
 		//
+		// $model = new \App\Models\Modelname();
+		// $records = $model->findAll();
+		//
 
 		// Add Info Message
 		$this->messages->add( 'info', 'This is how you add an info message.', 1 );
 
 		// Add Layout
-		$this->layout->add( 'degeo_welcome_message', 1 );
+		$this->layout->add( 'degeo_welcome_message', 2 );
 
 		// Render Layout
 		return $this->render();

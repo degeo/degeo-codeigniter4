@@ -148,6 +148,10 @@ class BaseController extends Controller
 
 		// DeGeo CodeIgniter 4 Layout Library
 		$this->layout = new \DeGeo\Libraries\Codeigniter4_layout();
+
+		// Add HTML Layouts
+		$this->layout->add( 'html/html5/header', 1 );
+		$this->layout->add( 'html/html5/footer', 999999 );
 	} // function
 
 	/**
