@@ -1,0 +1,1 @@
+<h1 class="title"><?php echo $document->title(); ?></h1>
