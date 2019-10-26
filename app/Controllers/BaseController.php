@@ -128,11 +128,14 @@ class BaseController extends Controller
 		// Set Default Meta Tag Charset
 		$this->metatags->add( '<meta charset="UTF-8">', 1 );
 
+		// Set Default Meta Tag Viewport
+		$this->metatags->add( '<meta name="viewport" content="width=device-width, initial-scale=1">', 2 );
+
 		// Set Default Meta Tag Description
-		$this->metatags->add( '<meta name="description" content="' . $this->application->description . '"/>', 2 );
+		$this->metatags->add( '<meta name="description" content="' . $this->application->description . '"/>', 3 );
 
 		// Set Default Meta Tag Keywords
-		$this->metatags->add( '<meta name="keywords" content="' . $this->application->keywords . '"/>', 3 );
+		$this->metatags->add( '<meta name="keywords" content="' . $this->application->keywords . '"/>', 4 );
 
 		// DeGeo Messages Queue Library
 		$this->messages = new \DeGeo\Libraries\Messages_queue();
