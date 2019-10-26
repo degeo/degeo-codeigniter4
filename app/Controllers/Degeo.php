@@ -1,6 +1,6 @@
 <?php namespace App\Controllers;
 
-class Degeo extends BaseController
+class Degeo extends ApplicationController
 {
 
 	public function index()
