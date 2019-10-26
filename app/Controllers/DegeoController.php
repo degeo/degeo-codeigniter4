@@ -63,6 +63,14 @@ class DegeoController extends BaseController
 	protected $metatags;
 
 	/**
+	 * Resources
+	 * Resource tags to render in the head and footer of a document.
+	 *
+	 * @var object
+	 */
+	protected $resources;
+
+	/**
 	 * Messages
 	 * Messages Queue
 	 *
@@ -120,6 +128,9 @@ class DegeoController extends BaseController
 		// Create Metatags Queue and Set Defaults
 		$this->metatags = $this->create_default_metatags();
 
+		// Create Resources Queue and Set Defaults
+		$this->resources = $this->create_default_resources();
+
 		// DeGeo Messages Queue Library
 		$this->messages = new \DeGeo\Libraries\Messages_queue();
 
@@ -148,6 +159,7 @@ class DegeoController extends BaseController
 			'hosts'       => $this->hosts,
 			'document'    => $this->document,
 			'metatags'    => $this->metatags,
+			'resources'   => $this->resources,
 			'messages'    => $this->messages,
 			'breadcrumbs' => $this->breadcrumbs,
 			'layout'      => $this->layout,
@@ -179,6 +191,21 @@ class DegeoController extends BaseController
 		$metatags->add( '<meta name="keywords" content="' . $this->application->keywords . '"/>', 4 );
 
 		return $metatags;
+	} // function
+
+	protected function create_default_resources()
+	{
+		// DeGeo Resources Queue Library
+		$resources = new \DeGeo\Libraries\Resources_queue();
+
+		// Queue jQuery Resources
+		$resources->add( 'header', '<script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>', 100 );
+
+		// Queue Bootstrap Resources
+		$resources->add( 'header', '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>', 1 );
+		$resources->add( 'header', '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>', 101 );
+
+		return $resources;
 	} // function
 
 	protected function create_default_breadcrumbs()
