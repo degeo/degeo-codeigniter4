@@ -17,6 +17,15 @@ class Degeo extends BaseController
 		// $records = $model->findAll();
 		//
 
+		// Add Data for the Renderer
+		$this->renderer->setVar( 'test', 'test successful' );
+
+		// Add Several Pieces of Data for the Renderer
+		// $this->renderer->setData( $data = [] );
+
+		// Remove all Data from the Renderer
+		// $this->renderer->resetData();
+
 		// Add Info Message
 		$this->messages->add( 'info', 'This is how you add an info message.', 1 );
 

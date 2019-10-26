@@ -21,6 +21,7 @@ use \DeGeo\Libraries\Metatags_queue;
 use \DeGeo\Libraries\Messages_queue;
 use \DeGeo\Libraries\Breadcrumbs_queue;
 use \DeGeo\Libraries\Codeigniter4_layout;
+use Config\Services;
 
 class BaseController extends Controller
 {
@@ -91,6 +92,22 @@ class BaseController extends Controller
 	protected $breadcrumbs;
 
 	/**
+	 * Layout
+	 * Layout Library for queuing layouts.
+	 *
+	 * @var object
+	 */
+	protected $layout;
+
+	/**
+	 * Renderer
+	 * Renderer service for setting data.
+	 *
+	 * @var object
+	 */
+	protected $renderer;
+
+	/**
 	 * Constructor.
 	 */
 	public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
@@ -152,6 +169,9 @@ class BaseController extends Controller
 		// Add HTML Layouts
 		$this->layout->add( 'html/html5/header', 1 );
 		$this->layout->add( 'html/html5/footer', 999999 );
+
+		// Load CodeIgniter 4 Renderer Service
+		$this->renderer = Services::renderer();
 	} // function
 
 	/**

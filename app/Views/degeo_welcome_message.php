@@ -107,6 +107,8 @@
 
 			<p class="version">version <?= CodeIgniter\CodeIgniter::CI_VERSION ?></p>
 
+			<p><?php echo $test; ?></p>
+
 			<div class="guide">
 				<p><?php echo $document->description(); ?></p>
 
