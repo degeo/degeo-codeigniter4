@@ -10,4 +10,4 @@ isset( $layout ) || $layout     = new stdObject();
 		<?php $metatags->render(); ?>
 		<?php $resources->render(); ?>
 	</head>
-	<body class="<?php #echo $layout->body_classes(); ?>">
+	<body class="<?php #echo $layout->body_classes(); - @TODO ?>">
