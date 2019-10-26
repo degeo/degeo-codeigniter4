@@ -30,7 +30,7 @@ class Degeo extends ApplicationController
 		$this->messages->add( 'info', 'This is how you add an info message.', 1 );
 
 		// Add Layout
-		$this->layout->add( 'degeo_welcome_message', 2 );
+		$this->layout->add( 'degeo_welcome_message', 100 );
 
 		// Render Layout
 		return $this->render();
