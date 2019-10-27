@@ -126,8 +126,18 @@ class AclController extends ApplicationController
 			return $this->_show_login();
 		endif;
 
-		// @TODO - show create account form
 		helper('form');
+
+		if($this->request->getMethod() === 'post'):
+			$email    = set_value( 'user_email' );
+			$password = set_value( 'user_password' );
+
+			$created_user = $this->_create( $email, $password );
+
+			if(! is_null( $created_user )):
+				return $this->_show_login();
+			endif;
+		endif;
 
 		// Set Document Title
 		$this->document->title( 'Create an Account for ' . $this->application->name );
@@ -170,17 +180,13 @@ class AclController extends ApplicationController
 		helper('form');
 
 		if($this->request->getMethod() === 'post'):
-			echo 'logging in';
-			$email    = $this->request->getVar( 'user_email' );
-			$password = $this->request->getVar( 'user_password' );
+			$email    = set_value( 'user_email' );
+			$password = set_value( 'user_password' );
 
 			$logged_in_user = $this->_login( $email, $password );
 
-			if($logged_in_user !== false):
-				echo 'success';
+			if(! is_null( $logged_in_user )):
 				return redirect()->to( site_url( uri_string() ) );
-			else:
-				echo 'failure';
 			endif;
 		endif;
 
