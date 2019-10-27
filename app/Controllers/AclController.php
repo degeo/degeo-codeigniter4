@@ -135,7 +135,7 @@ class AclController extends ApplicationController
 		// Add Second Breadcrumb
 		$this->breadcrumbs->add( '', $this->document->title(), ' Account Creation', 2 );
 
-		$this->layout->add( 'html/bootstrap/forms/user-login', 20 );
+		$this->layout->add( 'html/bootstrap/forms/user-create', 20 );
 
 		echo $this->render();
 
@@ -190,7 +190,7 @@ class AclController extends ApplicationController
 		// Add Second Breadcrumb
 		$this->breadcrumbs->add( '', $this->document->title() . ' Login', 2 );
 
-		$this->layout->add( 'html/bootstrap/forms/login', 20 );
+		$this->layout->add( 'html/bootstrap/forms/user-login', 20 );
 
 		echo $this->render();
 
