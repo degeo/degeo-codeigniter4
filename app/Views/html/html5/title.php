@@ -1,6 +1,6 @@
 <?php if(! empty( $title )): ?>
 <h1 class="title">
-	<a href="<?php echo site_url(); ?>" title="<?php echo $title; ?>">
+	<a class="title-link" href="<?php echo site_url(); ?>" title="<?php echo $title; ?>">
 		<?php echo $title; ?>
 	</a>
 </h1>

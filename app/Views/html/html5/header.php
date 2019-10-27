@@ -1,7 +1,7 @@
 <?php
-isset( $document ) || $document = new stdObject();
+isset( $document ) || die( 'Missing Document Variable in ' . __FILE__ );
 isset( $metatags ) || $metatags = [];
-isset( $layout ) || $layout     = new stdObject();
+isset( $layout ) || die( 'Missing Layout Variable in ' . __FILE__ );
 ?>
 <!doctype html>
 <html>
