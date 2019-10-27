@@ -1,4 +1,5 @@
 <form action="<?php echo site_url( uri_string() ); ?>" method="post">
+	<input type="hidden" name="form_name" value="acl.account.login"/>
 
 	<div class="form-group">
 		<label for="user_email">Email address</label>

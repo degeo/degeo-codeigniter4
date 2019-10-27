@@ -128,7 +128,7 @@ class AclController extends ApplicationController
 
 		helper('form');
 
-		if($this->request->getMethod() === 'post'):
+		if($this->request->getMethod() === 'post' && set_value( 'form_name' ) === 'acl.account.create'):
 			$email    = set_value( 'user_email' );
 			$password = set_value( 'user_password' );
 
@@ -179,7 +179,7 @@ class AclController extends ApplicationController
 	{
 		helper('form');
 
-		if($this->request->getMethod() === 'post'):
+		if($this->request->getMethod() === 'post' && set_value( 'form_name' ) === 'acl.account.login'):
 			$email    = set_value( 'user_email' );
 			$password = set_value( 'user_password' );
 
