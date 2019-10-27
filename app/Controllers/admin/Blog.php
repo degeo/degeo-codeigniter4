@@ -12,16 +12,12 @@ class Blog extends AclController
 		parent::initController( $request, $response, $logger );
 
 		// Validate the current User
-		if($this->validate_user() === false):
-			echo 'logged out';
-		else:
-			echo 'logged in';
-		endif;
-		var_dump( $this->validate_user() );
+		$this->validate_user();
 	} // function
 
 	public function index()
 	{
+		echo 'hello!';
 		print_r($this->current_user);
 	} // function
 

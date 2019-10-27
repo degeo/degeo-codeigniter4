@@ -10,20 +10,41 @@ class AclController extends ApplicationController
 	/**
 	 * An array of helpers to be loaded automatically upon
 	 * class instantiation. These helpers will be available
-	 * to all other controllers that extend ApplicationController.
+	 * to all other controllers that extend AclController.
 	 *
 	 * @var array
 	 */
 	protected $helpers = [];
 
+	/**
+	 * Forces Authentication
+	 * Set this property in extending Controllers to true to require login.
+	 *
+	 * @var boolean
+	 */
 	protected $login_required = false;
 
+	/**
+	 * Account Creation Enabled
+	 * Determines whether or not users can create their own accounts.
+	 *
+	 * @var boolean
+	 */
+	protected $account_creation_enabled = false;
+
+	/**
+	 * Session Library
+	 *
+	 * @var null
+	 */
 	protected $session = null;
 
 	protected $users_model;
 
 	protected $current_user_id = null;
 	protected $current_user    = [];
+
+	protected $request;
 
 	/**
 	 * Constructor.
@@ -32,6 +53,8 @@ class AclController extends ApplicationController
 	{
 		// Do Not Edit This Line
 		parent::initController($request, $response, $logger);
+
+		$this->request = $request;
 
 		//--------------------------------------------------------------------
 		// Preload any models, libraries, etc, here.
@@ -73,14 +96,11 @@ class AclController extends ApplicationController
 
 	protected function validate_user()
 	{
-		if ($this->user_is_logged_in() === true)
-		{
-			return true;
-		}
+		if($this->user_is_logged_in() === false):
+			return $this->_show_login();
+		endif;
 
-		$this->_show_login();
-
-		return false;
+		return true;
 	} // function
 
 	protected function user_is_logged_in()
@@ -102,33 +122,90 @@ class AclController extends ApplicationController
 
 	protected function _show_create()
 	{
+		if($this->account_creation_enabled === false):
+			return $this->_show_login();
+		endif;
+
 		// @TODO - show create account form
-		echo 'creat form';
+		helper('form');
+
+		// Set Document Title
+		$this->document->title( 'Create an Account for ' . $this->application->name );
+
+		// Add Second Breadcrumb
+		$this->breadcrumbs->add( '', $this->document->title(), ' Account Creation', 2 );
+
+		$this->layout->add( 'html/bootstrap/forms/user-login', 20 );
+
+		echo $this->render();
+
+		exit();
 	} // function
 
 	protected function _create($email, $password)
 	{
+		if ($this->account_creation_enabled === false)
+		{
+			return false;
+		}
+
 		$data = [
 			'user_email'    => $email,
-			'user_password' => $password,
+			'user_password' => $this->_hash_password( $password ),
 		];
 
 		$user_id = $this->users_model->insert( $data );
+
+		if ($user_id === false)
+		{
+			return false;
+		}
+
+		return $user_id;
 	} // function
 
+	// @TODO - show login form
 	protected function _show_login()
 	{
-		// @TODO - show login form
-		echo 'login form';
+		helper('form');
 
-		return $this->render();
+		if($this->request->getMethod() === 'post'):
+			echo 'logging in';
+			$email    = $this->request->getVar( 'user_email' );
+			$password = $this->request->getVar( 'user_password' );
+
+			$logged_in_user = $this->_login( $email, $password );
+
+			if($logged_in_user !== false):
+				echo 'success';
+				return redirect()->to( site_url( uri_string() ) );
+			else:
+				echo 'failure';
+			endif;
+		endif;
+
+		// Set Document Title
+		$this->document->title( 'Login to ' . $this->application->name );
+
+		// Add Second Breadcrumb
+		$this->breadcrumbs->add( '', $this->document->title() . ' Login', 2 );
+
+		$this->layout->add( 'html/bootstrap/forms/login', 20 );
+
+		echo $this->render();
+
+		exit();
 	} // function
 
 	protected function _login($email, $password)
 	{
+		if (empty( $email ) || empty( $password ))
+		{
+			throw new \Exception( 'Missing required parameters in ' . __METHOD__ );
+		}
+
 		$where = [
-			'user_email'    => $email,
-			'user_password' => $password,
+			'user_email' => $email,
 		];
 
 		$user = $this->users_model->where( $where )->first();
@@ -138,9 +215,13 @@ class AclController extends ApplicationController
 			return false;
 		}
 
-		if (array_key_exists( 'user_id', $user ) && ! empty( $user['user_id'] ))
+		if(password_verify( $password, $user['user_password'] ) === false):
+			return false;
+		endif;
+
+		if (array_key_exists( $this->users_model->primaryKey, $user ) && ! empty( $user[$this->users_model->primaryKey] ))
 		{
-			$this->current_user_id = $user_id;
+			$this->current_user_id = $user[$this->users_model->primaryKey];
 		}
 
 		if (empty( $this->current_user_id ))
@@ -177,6 +258,18 @@ class AclController extends ApplicationController
 		}
 
 		return $this->current_user;
+	} // function
+
+	protected function _hash_password($password)
+	{
+		if (empty( $password ))
+		{
+			throw new \Exception( 'Missing parameter for ' . __METHOD__ );
+		}
+
+		$password = password_hash( $password, PASSWORD_BCRYPT );
+
+		return $password;
 	} // function
 
 } // class
